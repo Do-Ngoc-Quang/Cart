@@ -1,6 +1,7 @@
+lst = [];
+curItem = null;
 $(function () {
-    lst = [];
-    curItem = null;
+
     var data = [
         {
             "value": "iPhone 14 Pro",
@@ -94,9 +95,11 @@ $(function () {
 });
 
 function addProduct() {
-    const qty = parseInt($("#inp_quantity").val());
+    var qty = parseInt($("#inp_quantity").val());
     curItem.Quantity = qty;
     curItem.intomoney = qty * curItem.price;
+    
+
 
     var i = 0;
     for (i; i < lst.length; i++) {
@@ -110,11 +113,16 @@ function addProduct() {
     } else {
         lst.push(curItem);
     }
+    console.log(lst[i].Quantity);
+    totalMoney();
+}
+function addPromo() {
+    var proPercent = $("#promoPercent").val();
+    curItem.ProPercent = proPercent;
+    console.log(curItem.ProPercent);
 
     totalMoney();
-    //console.log(lst);
 }
-
 function DeleteProduct(codeID) {
     var i = 0;
     for (i; i < lst.length; i++) {
@@ -124,16 +132,18 @@ function DeleteProduct(codeID) {
     }
     if (i < lst.length) {
         lst.splice(i, 1);
-        totalMoney();
     }
-    
+    totalMoney();
+
 }
 
 function totalMoney() {
     total = 0;
     for (i = 0; i < lst.length; i++) {
-        total +=lst[i].intomoney;
+        total += lst[i].intomoney;
     }
+    total -= (total * curItem.ProPercent / 100);
+
     $("#totalMoney").html(formatNumber(total));
     $("#totalProduct").text(lst.length);
     $("#ulCart").html("");
