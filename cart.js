@@ -95,11 +95,11 @@ $(function () {
 });
 
 function addProduct() {
-    var qty = parseInt($("#inp_quantity").val());
+    const qty = parseInt($("#inp_quantity").val());
     curItem.Quantity = qty;
     curItem.intomoney = qty * curItem.price;
-    
-
+    console.log(qty);
+//hihi test thu cai update on gitDesktop
 
     var i = 0;
     for (i; i < lst.length; i++) {
@@ -108,8 +108,11 @@ function addProduct() {
         }
     }
     if (i < lst.length) {
-        curItem.Quantity = qty + lst[i].Quantity;
-        curItem.intomoney = curItem.Quantity * curItem.price;
+        curItem.nowQuantity = curItem.Quantity + lst[i].Quantity;
+        console.log(qty);
+        console.log(lst[i].Quantity);
+        console.log(curItem.nowQuantity);
+        curItem.intomoney = curItem.nowQuantity * curItem.price;
     } else {
         lst.push(curItem);
     }
@@ -143,6 +146,9 @@ function totalMoney() {
         total += lst[i].intomoney;
     }
     total -= (total * curItem.ProPercent / 100);
+
+
+
 
     $("#totalMoney").html(formatNumber(total));
     $("#totalProduct").text(lst.length);
